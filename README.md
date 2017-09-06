@@ -15,6 +15,8 @@ Download and unpack to `/usr/lib/python2.7/dist-packages/ccunrpc/`
   * `common.py`
   * `rpc_%currency_daemon_name%.py`
 
+Add file for you currency daemon with name `rpc_daemon_name.py` from `skeleton_rpc_daemon.py`
+
 Example supervisord config:
 ---------------------------
 
@@ -28,5 +30,5 @@ Methods:
 
 - `get_height()` - Get current height
 
-    python -c "import xmlrpclib;print xmlrpclib.ServerProxy('http://root:password@localhost:9001/RPC2').ccunrpc.get_height()"
+    python -c "import xmlrpclib;print xmlrpclib.ServerProxy('http://user:password@localhost:9001/RPC2').ccunrpc.get_height()"
 
