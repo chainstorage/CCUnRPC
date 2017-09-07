@@ -29,6 +29,6 @@ class CCunRPCmain():
             self.payload['status'] = 'Error'
         return self.payload
 
-def make_main_rpcinterface(supervisord, **config):
+def make_main_rpcinterface(supervisord):
     main_rpcinterface = CCunRPCmain(supervisord)
     return main_rpcinterface
