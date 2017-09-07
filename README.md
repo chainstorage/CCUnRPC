@@ -4,7 +4,6 @@ CryptoCurrencies Unified Remote Procedure Call interface
 It is a python-module for supervisord.
 Realize typical unified methods for management of cryptocurrencies daemons as extensions for [Supervisor’s](http://supervisord.org/xmlrpc.html) XML-RPC API.
 
-
 Deploy:
 -------
 
@@ -12,17 +11,13 @@ Download and unpack to `/usr/lib/python2.7/dist-packages/ccunrpc/`
 
   files:
   * `__init__.py`
-  * `common.py`
-  * `rpc_%currency_daemon_name%.py`
-
-Add file for you currency daemon with name `rpc_daemon_name.py` from `skeleton_rpc_daemon.py`
+  * `%currency_daemon_name%.py`
 
 Example supervisord config:
 ---------------------------
 
     [rpcinterface:ccunrpc]
-    supervisor.rpcinterface_factory = ccunrpc.common:make_main_rpcinterface
-    daemon = bitcoind
+    supervisor.rpcinterface_factory = ccunrpc.bitconid:make_main_rpcinterface
     daemon_config = /config/bitcoin.conf
 
 Methods:
