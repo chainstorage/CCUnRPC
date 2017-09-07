@@ -22,7 +22,7 @@ class CCunRPCmain():
         }
         r = requests.post(self.rpc_url, auth=HTTPBasicAuth(self.rpcuser, self.rpcpassword), json=data)
         if r.status_code == requests.codes.ok:
-            self.payload['data'] = int(r.json()['result'])
+            self.payload['data'] = int(r.json()['result'], 0)
             self.payload['status'] = 'OK'
         else:
             self.payload['data'] = r.text
@@ -30,5 +30,5 @@ class CCunRPCmain():
         return self.payload
 
 def make_main_rpcinterface(supervisord, **config):
-    main_rpcinterface = CCunRPCmain(supervisord,)
+    main_rpcinterface = CCunRPCmain(supervisord)
     return main_rpcinterface
