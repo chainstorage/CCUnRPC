@@ -7,11 +7,9 @@ Realize typical unified methods for management of cryptocurrencies daemons as ex
 Deploy:
 -------
 
-Download and unpack to `/usr/lib/python2.7/dist-packages/ccunrpc/`
+Download and unpack module:
 
-  files:
-  * `__init__.py`
-  * `%currency_daemon_name%.py`
+    git clone https://github.com/chainstorage/CCUnRPC.git /usr/lib/python2.7/dist-packages/ccunrpc/
 
 Example supervisord config:
 ---------------------------
