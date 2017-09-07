@@ -22,7 +22,7 @@ class CCunRPCmain():
         }
         r = requests.post(self.rpc_url, auth=HTTPBasicAuth(self.rpcuser, self.rpcpassword), json=data)
         if r.status_code == requests.codes.ok:
-            self.payload['data'] = r.json()['result']['blocks']
+            self.payload['data'] = int(r.json()['result'])
             self.payload['status'] = 'OK'
         else:
             self.payload['data'] = r.text
