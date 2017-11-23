@@ -100,4 +100,7 @@ ENV/
 # mypy
 .mypy_cache/
 .idea/
+
+# vscode
+*.vscode*
 test.py
