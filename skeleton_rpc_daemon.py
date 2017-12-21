@@ -13,7 +13,7 @@ class CCunRPCmain():
         self.rpcpassword = ''
         self.payload = {'data': '',
                         'status': 'OK'}
-        # Read currensy daemons config for RPC-acccess credentials
+        # Read currency daemons config for RPC-acccess credentials
         with open(self.daemon_config) as conf_file:
             for line in conf_file.readlines():
                 if line.split("=")[0] == "rpcuser":
