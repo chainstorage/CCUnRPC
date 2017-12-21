@@ -5,6 +5,7 @@
 import requests
 from requests.auth import HTTPDigestAuth
 
+
 class CCunRPCmain():
     def __init__(self, supervisord, daemon_config):
         self.supervisord = supervisord
@@ -22,10 +23,10 @@ class CCunRPCmain():
                             self.rpcuser = credentials.split(":")[0]
                             self.rpcpassword = credentials.split(":")[1]
 
-
     def get_height(self):
         self.rpc_url = 'http://127.0.0.1:18081/getheight'
-        r = requests.post(self.rpc_url, auth=HTTPDigestAuth(self.rpcuser, self.rpcpassword))
+        r = requests.post(self.rpc_url,
+                          auth=HTTPDigestAuth(self.rpcuser, self.rpcpassword))
         if r.status_code == requests.codes.ok:
             self.payload['data'] = r.json()['height']
             self.payload['status'] = 'OK'
@@ -33,6 +34,7 @@ class CCunRPCmain():
             self.payload['data'] = r.text
             self.payload['status'] = 'Error'
         return self.payload
+
 
 def make_main_rpcinterface(supervisord, **config):
     daemon_config = config.get('daemon_config')

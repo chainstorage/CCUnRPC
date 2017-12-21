@@ -4,6 +4,7 @@
 import requests
 from requests.auth import HTTPBasicAuth
 
+
 class CCunRPCmain():
     def __init__(self, supervisord, daemon_config):
         self.supervisord = supervisord
@@ -28,7 +29,9 @@ class CCunRPCmain():
             'method': 'getinfo',
             'params': []
         }
-        r = requests.post(self.rpc_url, auth=HTTPBasicAuth(self.rpcuser, self.rpcpassword), json=data)
+        r = requests.post(self.rpc_url,
+                          auth=HTTPBasicAuth(self.rpcuser, self.rpcpassword),
+                          json=data)
         if r.status_code == requests.codes.ok:
             self.payload['data'] = r.json()['result']['blocks']
             self.payload['status'] = 'OK'
@@ -36,6 +39,7 @@ class CCunRPCmain():
             self.payload['data'] = r.text
             self.payload['status'] = 'Error'
         return self.payload
+
 
 def make_main_rpcinterface(supervisord, **config):
     daemon_config = config.get('daemon_config')

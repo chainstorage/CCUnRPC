@@ -4,6 +4,7 @@
 import requests
 from requests.auth import HTTPBasicAuth
 
+
 class CCunRPCmain():
     def __init__(self, supervisord):
         self.supervisord = supervisord
@@ -20,7 +21,9 @@ class CCunRPCmain():
             'method': 'eth_blockNumber',
             'params': []
         }
-        r = requests.post(self.rpc_url, auth=HTTPBasicAuth(self.rpcuser, self.rpcpassword), json=data)
+        r = requests.post(self.rpc_url,
+                          auth=HTTPBasicAuth(self.rpcuser, self.rpcpassword),
+                          json=data)
         if r.status_code == requests.codes.ok:
             self.payload['data'] = int(r.json()['result'], 0)
             self.payload['status'] = 'OK'
@@ -28,6 +31,7 @@ class CCunRPCmain():
             self.payload['data'] = r.text
             self.payload['status'] = 'Error'
         return self.payload
+
 
 def make_main_rpcinterface(supervisord):
     main_rpcinterface = CCunRPCmain(supervisord)
