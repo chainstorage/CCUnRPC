@@ -3,6 +3,9 @@
 
 import requests
 from requests.auth import HTTPBasicAuth
+import sys
+import xmlrpclib
+from subprocess import check_output, CalledProcessError, STDOUT
 
 
 class CCunRPCmain():
@@ -29,6 +32,28 @@ class CCunRPCmain():
             self.payload['status'] = 'OK'
         else:
             self.payload['data'] = r.text
+            self.payload['status'] = 'Error'
+        return self.payload
+
+    def get_wallet(self):
+        """
+        Return the xmlrpclib.Binary object with current wallet.
+        For 'parity' it is gzipped tar archive of 'keys' directory.
+        """
+        try:
+            res = check_output("tar czf /secrets/wallet.tgz *",
+                               cwd='/secrets/keys', stderr=STDOUT, shell=True)
+        except CalledProcessError as e:
+            self.payload['status'] = 'Error'
+            self.payload['data'] = 'RC {}: {}'.format(e.returncode, e.output)
+            return self.payload
+
+        try:
+            with open('/secrets/wallet.tgz', 'rb') as w_bak:
+                self.payload['data'] = xmlrpclib.Binary(w_bak.read())
+            self.payload['status'] = 'OK'
+        except IOError:
+            self.payload['data'] = 'Can not read /secrets/wallet.tgz'
             self.payload['status'] = 'Error'
         return self.payload
 
