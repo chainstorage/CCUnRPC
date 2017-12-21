@@ -3,6 +3,8 @@
 
 import requests
 from requests.auth import HTTPBasicAuth
+import sys
+import xmlrpclib
 
 
 class CCunRPCmain():
@@ -35,6 +37,30 @@ class CCunRPCmain():
         if r.status_code == requests.codes.ok:
             self.payload['data'] = r.json()['result']['blocks']
             self.payload['status'] = 'OK'
+        else:
+            self.payload['data'] = r.text
+            self.payload['status'] = 'Error'
+        return self.payload
+
+    def get_wallet(self):
+        """Return the xmlrpclib.Binary object with current wallet."""
+        data = {
+            'jsonrpc': '1.0',
+            'id': 'curltest',
+            'method': 'backupwallet',
+            'params': ['/secrets/wallet.backup']
+        }
+        r = requests.post(self.rpc_url,
+                          auth=HTTPBasicAuth(self.rpcuser, self.rpcpassword),
+                          json=data)
+        if r.status_code == requests.codes.ok:
+            try:
+                with open('/secrets/wallet.backup', 'rb') as w_bak:
+                    self.payload['data'] = xmlrpclib.Binary(w_bak.read())
+                self.payload['status'] = 'OK'
+            except IOError:
+                self.payload['data'] = 'Can not read /secrets/wallet.backup'
+                self.payload['status'] = 'Error'
         else:
             self.payload['data'] = r.text
             self.payload['status'] = 'Error'
