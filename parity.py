@@ -51,6 +51,7 @@ class CCunRPCmain():
         try:
             with open('/secrets/wallet.tgz', 'rb') as w_bak:
                 self.payload['data'] = xmlrpclib.Binary(w_bak.read())
+            self.payload['file_type'] = 'tgz'
             self.payload['status'] = 'OK'
         except IOError:
             self.payload['data'] = 'Can not read /secrets/wallet.tgz'

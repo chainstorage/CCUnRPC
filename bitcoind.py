@@ -57,6 +57,7 @@ class CCunRPCmain():
             try:
                 with open('/secrets/wallet.backup', 'rb') as w_bak:
                     self.payload['data'] = xmlrpclib.Binary(w_bak.read())
+                self.payload['file_type'] = 'dat'
                 self.payload['status'] = 'OK'
             except IOError:
                 self.payload['data'] = 'Can not read /secrets/wallet.backup'
