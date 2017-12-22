@@ -19,10 +19,13 @@ class CCunRPCmain():
         # Read currency daemons config for RPC-acccess credentials
         with open(self.daemon_config) as conf_file:
             for line in conf_file.readlines():
-                if line.split("=")[0] == "rpcuser":
+                if line.split("=")[0].strip() == "rpcuser":
                     self.rpcuser = line.split("=")[1].strip()
-                elif line.split("=")[0] == "rpcpassword":
+                elif line.split("=")[0].strip() == "rpcpassword":
                     self.rpcpassword = line.split("=")[1].strip()
+                elif line.split("=")[0].strip() == "rpcport":
+                    port = line.split("=")[1].strip()
+                    self.rpc_url = "http://127.0.0.1:{}".format(port)
 
     def get_height(self):
         data = {
