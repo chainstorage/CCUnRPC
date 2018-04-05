@@ -15,18 +15,12 @@ class CCunRPCmain():
         self.rpcpassword = ''
         self.payload = {'data': '',
                         'status': 'OK'}
-        with open(self.daemon_config) as conf_file:
-                for line in conf_file.readlines():
-                        if line.split("=")[0] == "rpc-login":
-                            # self.rpccreds = line.split("=")[1].strip()
-                            credentials = line.split("=")[1]
-                            self.rpcuser = credentials.split(":")[0]
-                            self.rpcpassword = credentials.split(":")[1]
 
     def get_height(self):
         self.rpc_url = 'http://127.0.0.1:18081/getheight'
         r = requests.post(self.rpc_url,
-                          auth=HTTPDigestAuth(self.rpcuser, self.rpcpassword))
+                          auth=HTTPDigestAuth(self.rpcuser, self.rpcpassword),
+                          timeout=15)
         if r.status_code == requests.codes.ok:
             self.payload['data'] = r.json()['height']
             self.payload['status'] = 'OK'
